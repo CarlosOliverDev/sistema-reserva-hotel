@@ -7,10 +7,11 @@ public class Reserva {
     private int quantidadeDias;
     private double valorTotalHospedagem;
 
-    public Reserva(String nomeHospede, String quartoHotel, int quantidadeDias) {
+    public Reserva(String nomeHospede, String quartoHotel, int quantidadeDias, double valorDiaria) {
         this.nomeHospede = nomeHospede;
         this.quartoHotel = quartoHotel;
         this.quantidadeDias = quantidadeDias;
+        this.valorTotalHospedagem = calcularValorTotal(valorDiaria, quantidadeDias);
     }
 
     public String getNomeHospede() {
@@ -38,17 +39,18 @@ public class Reserva {
         return valorTotalHospedagem;
     }
 
-    public void calcularValorTotal() {
+    public double calcularValorTotal(double valorDiaria, int quantidadeDias) {
+        return valorDiaria * (double) quantidadeDias;
     }
 
     public String toString() {
-        return "\nNome Hóspede: " +
+        return "\nNome do Hóspede: " +
                 getNomeHospede() +
-                "\nQuarto Escolhido: " +
+                ".\nQuarto Escolhido: " +
                 getQuartoHotel() +
-                "\nQuantidade de Dias Reservado: " +
+                "\nQuantidade de Dias Reservados: " +
                 getQuantidadeDias() +
-                "\nValor Total da Hospedagem: " +
-                getValorTotalHospedagem();
+                "\nValor Total da Hospedagem: R$ " +
+                String.format("%.2f",getValorTotalHospedagem()) ;
     }
 }
