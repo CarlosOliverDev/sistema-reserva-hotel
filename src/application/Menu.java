@@ -36,6 +36,7 @@ public class Menu {
                     cadastrarNovaReserva(meuScanner);
                     break;
                 case 2:
+                    listarReservas();
                     break;
                 case 3:
                     break;
@@ -121,6 +122,19 @@ public class Menu {
             }
         } while(opcaoQuarto<1 || opcaoQuarto>3); {
             return tipoQuarto;
+        }
+    }
+
+    public static void listarReservas() {
+        if(vetorReserva[0] == null) {
+            System.out.println("\nNenhuma reserva feita.");
+        } else {
+            for (int reserva = 0; reserva < vetorReserva.length; reserva++) {
+                if (vetorReserva[reserva] != null) {
+                    System.out.print("\nReserva " + (reserva+1) + ":");
+                    System.out.println(vetorReserva[reserva]);
+                }
+            }
         }
     }
 }
