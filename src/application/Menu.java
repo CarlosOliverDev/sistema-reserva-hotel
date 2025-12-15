@@ -26,7 +26,7 @@ public class Menu {
 
         do {
             System.out.println("\nMenu Principal:");
-            System.out.println("1- Cadastrar nova reserva.\n2- Listar reservas.\n3- Buscar reserva por nome do hóspede.\n4- Ordenar reservas por números de dias em ordem crescente.\n5- Sair do programa.");
+            System.out.println("1- Cadastrar nova reserva.\n2- Listar reservas.\n3- Buscar reserva por nome do hóspede.\n4- Ordenar reservas por números de dias em ordem decrescente.\n5- Sair do programa.");
 
             System.out.print("\nDigite o número de uma das opções: ");
             opcaoUsuario = meuScanner.nextInt();
@@ -43,6 +43,7 @@ public class Menu {
                     buscarReservaPorNome(meuScanner);
                     break;
                 case 4:
+                    ordenarVetorReservas();
                     break;
                 case 5:
                     break;
@@ -183,6 +184,25 @@ public class Menu {
             if(!encontrou) {
                 System.out.println("\nNenhuma reserva com parte do nome foi encontrado.");
             }
+        }
+    }
+
+    public static void ordenarVetorReservas() {
+
+        if(vetorReserva[0] != null) {
+            for(int i = 0; i < vetorReserva.length; i++) {
+
+                for(int j = i; j < vetorReserva.length; j++) {
+                    if(vetorReserva[i] != null && vetorReserva[j] != null && vetorReserva[j].getQuantidadeDias() > vetorReserva[i].getQuantidadeDias() ) {
+                        Reserva aux = vetorReserva[i];
+                        vetorReserva[i] = vetorReserva[j];
+                        vetorReserva[j] = aux;
+                    }
+                }
+            }
+            System.out.println("\nOrdenação decrescente concluída.");
+        } else {
+            System.out.println("\nNão há quartos reservados.");
         }
     }
 }
