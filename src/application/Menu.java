@@ -79,9 +79,23 @@ public class Menu {
         int quantidadeDias = meuScanner.nextInt();
         meuScanner.nextLine();
 
+        while(quantidadeDias < 1) {
+            System.out.print("\nÉ necessário se hospedar pelo menos 1 dia.");
+            System.out.print("\nDigite a quantidade de dias que deseja reservar: ");
+            quantidadeDias = meuScanner.nextInt();
+            meuScanner.nextLine();
+        }
+
         System.out.print("\nDigite o valor da diária: R$ ");
         double valorDiaria = meuScanner.nextDouble();
         meuScanner.nextLine();
+
+        while(valorDiaria <= 0) {
+            System.out.print("\nValor inválido, preencha com um valor positivo.");
+            System.out.print("\nDigite o valor da diária: R$ ");
+            valorDiaria = meuScanner.nextInt();
+            meuScanner.nextLine();
+        }
 
         Reserva novaReserva = new Reserva(nomeUsuario, quartoEscolhido, quantidadeDias, valorDiaria);
 
