@@ -21,6 +21,7 @@ public class Menu {
     }
 
     public static void selecionarOpcaoMenuPrincipal(Scanner meuScanner) {
+
         int opcaoUsuario = 0;
 
         do {
@@ -39,6 +40,7 @@ public class Menu {
                     listarReservas();
                     break;
                 case 3:
+                    buscarReservaPorNome(meuScanner);
                     break;
                 case 4:
                     break;
@@ -54,6 +56,7 @@ public class Menu {
     }
 
     public static void cadastrarNovaReserva(Scanner meuScanner) {
+
         if(contadorReservas < MAXIMO_DE_RESERVAS) {
 
             criarReserva(meuScanner);
@@ -64,6 +67,7 @@ public class Menu {
     }
 
     public static void criarReserva(Scanner meuScanner) {
+
         System.out.println("\nCadastro de Reserva de Quarto:");
 
         System.out.print("Digite seu nome: ");
@@ -100,6 +104,7 @@ public class Menu {
 
         int opcaoQuarto;
         String tipoQuarto = null;
+
         do {
             System.out.println("\nOpções de Quarto:\n1- Quarto básico.\n2- Quarto de Luxo.\n3- Quarto Presidencial.");
 
@@ -126,6 +131,7 @@ public class Menu {
     }
 
     public static void listarReservas() {
+
         if(vetorReserva[0] == null) {
             System.out.println("\nNenhuma reserva feita.");
         } else {
@@ -134,6 +140,34 @@ public class Menu {
                     System.out.print("\nReserva " + (reserva+1) + ":");
                     System.out.println(vetorReserva[reserva]);
                 }
+            }
+        }
+    }
+
+    public static void buscarReservaPorNome(Scanner meuScanner) {
+
+        if(vetorReserva[0] == null) {
+            System.out.println("\nNão há quartos reservados.");
+        } else {
+            System.out.print("\nDigite o nome que deseja buscar: ");
+            String nome = meuScanner.nextLine();
+            nome = nome.toLowerCase();
+
+            boolean encontrou = false;
+
+            for(int i = 0; i < vetorReserva.length; i++) {
+                if(vetorReserva[i] != null) {
+                    String aux = vetorReserva[i].getNomeHospede().toLowerCase();
+                    if(aux.contains(nome)) {
+                        System.out.print("\nReserva com parte do nome encontrado:");
+                        System.out.println(vetorReserva[i]);
+
+                        encontrou = true;
+                    }
+                }
+            }
+            if(!encontrou) {
+                System.out.println("\nNenhuma reserva com parte do nome foi encontrado.");
             }
         }
     }
