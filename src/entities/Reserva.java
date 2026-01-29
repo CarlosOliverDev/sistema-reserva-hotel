@@ -13,7 +13,6 @@ public class Reserva {
         this.quantidadeDias = quantidadeDias;
         this.valorTotalHospedagem = calcularValorTotal(valorDiaria, quantidadeDias);
     }
-    
     public Reserva(String nomeHospede, String quartoHotel) {
         this.nomeHospede = nomeHospede;
         this.quartoHotel = quartoHotel;
