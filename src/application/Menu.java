@@ -4,26 +4,19 @@ import java.util.Scanner;
 import entities.Reserva;
 
 public class Menu {
-
-    public static final int MAXIMO_DE_RESERVAS = 10;
+    public static final int MAXIMO_DE_RESERVAS = 5;
     public static int contadorReservas = 0;
     public static Reserva[] vetorReserva = new Reserva[MAXIMO_DE_RESERVAS];
+    public static Scanner meuScanner = new Scanner(System.in);
 
     public static void main(String[] args) {
-
-        Scanner meuScanner = new Scanner(System.in);
-
-        System.out.println("Bem-vindo ao Programa de Reservas de Quartos de Hotel!");
-
-        selecionarOpcaoMenuPrincipal(meuScanner);
-
+        selecionarOpcaoMenuPrincipal();
         meuScanner.close();
     }
 
-    public static void selecionarOpcaoMenuPrincipal(Scanner meuScanner) {
-
+    public static void selecionarOpcaoMenuPrincipal() {
+        System.out.println("Bem-vindo ao Programa de Reservas de Quartos de Hotel!");
         int opcaoUsuario = 0;
-
         do {
             System.out.println("\nMenu Principal:");
             System.out.println("1- Cadastrar nova reserva.\n2- Listar reservas.\n3- Buscar reserva por nome do hóspede.\n4- Ordenar reservas por números de dias em ordem decrescente.\n5- Sair do programa.");
@@ -32,49 +25,48 @@ public class Menu {
             opcaoUsuario = meuScanner.nextInt();
             meuScanner.nextLine();
 
-            switch(opcaoUsuario) {
-                case 1:
-                    cadastrarNovaReserva(meuScanner);
-                    break;
-                case 2:
-                    listarReservas();
-                    break;
-                case 3:
-                    buscarReservaPorNome(meuScanner);
-                    break;
-                case 4:
-                    ordenarVetorReservas();
-                    break;
-                case 5:
-                    break;
-                default:
-                    System.out.println("\nOpção inválida, tente novamente.");
-            }
-
-        } while(opcaoUsuario != 5); {
-            System.out.println("\nObrigado por usar o programa!");
-        };
+            opcaoMenu(opcaoUsuario);
+        } while(opcaoUsuario != 5);
+        System.out.println("\nObrigado por usar o programa!");
     }
 
-    public static void cadastrarNovaReserva(Scanner meuScanner) {
+    public static void opcaoMenu(int opcaoUsuario) {
+        switch(opcaoUsuario) {
+            case 1:
+                cadastrarNovaReserva();
+                break;
+            case 2:
+                listarReservas();
+                break;
+            case 3:
+                buscarReservaPorNome();
+                break;
+            case 4:
+                ordenarVetorReservas();
+                break;
+            case 5:
+                break;
+            default:
+                System.out.println("\nOpção inválida, tente novamente.");
+        }
+    }
 
+    public static void cadastrarNovaReserva() {
         if(contadorReservas < MAXIMO_DE_RESERVAS) {
-
-            criarReserva(meuScanner);
+            criarReserva();
 
         } else {
             System.out.println("Desculpe, o hotel chegou ao máximo de reservas!");
         }
     }
 
-    public static void criarReserva(Scanner meuScanner) {
-
+    public static void criarReserva() {
         System.out.println("\nCadastro de Reserva de Quarto:");
 
         System.out.print("Digite seu nome: ");
         String nomeUsuario = meuScanner.nextLine();
 
-        String quartoEscolhido = escolherQuarto(meuScanner);
+        String quartoEscolhido = escolherQuarto();
 
         System.out.print("\nDigite a quantidade de dias que deseja reservar: ");
         int quantidadeDias = meuScanner.nextInt();
@@ -115,11 +107,9 @@ public class Menu {
         }
     }
 
-    public static String escolherQuarto(Scanner meuScanner) {
-
+    public static String escolherQuarto() {
         int opcaoQuarto;
         String tipoQuarto = null;
-
         do {
             System.out.println("\nOpções de Quarto:\n1- Quarto básico.\n2- Quarto de Luxo.\n3- Quarto Presidencial.");
 
@@ -146,10 +136,10 @@ public class Menu {
     }
 
     public static void listarReservas() {
-
         if(vetorReserva[0] == null) {
             System.out.println("\nNenhuma reserva feita.");
         } else {
+            System.out.print("\nReservas Agendadas:");
             for (int reserva = 0; reserva < vetorReserva.length; reserva++) {
                 if (vetorReserva[reserva] != null) {
                     System.out.print("\nReserva " + (reserva+1) + ":");
@@ -159,8 +149,7 @@ public class Menu {
         }
     }
 
-    public static void buscarReservaPorNome(Scanner meuScanner) {
-
+    public static void buscarReservaPorNome() {
         if(vetorReserva[0] == null) {
             System.out.println("\nNão há quartos reservados.");
         } else {
@@ -188,10 +177,8 @@ public class Menu {
     }
 
     public static void ordenarVetorReservas() {
-
         if(vetorReserva[0] != null) {
             for(int i = 0; i < vetorReserva.length; i++) {
-
                 for(int j = i; j < vetorReserva.length; j++) {
                     if(vetorReserva[i] != null && vetorReserva[j] != null && vetorReserva[j].getQuantidadeDias() > vetorReserva[i].getQuantidadeDias() ) {
                         Reserva aux = vetorReserva[i];

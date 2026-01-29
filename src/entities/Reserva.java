@@ -1,21 +1,16 @@
 package entities;
 
 public class Reserva {
-
     private String nomeHospede;
     private String quartoHotel;
     private int quantidadeDias;
-    private double valorTotalHospedagem;
+    private final double valorTotalHospedagem;
 
     public Reserva(String nomeHospede, String quartoHotel, int quantidadeDias, double valorDiaria) {
         this.nomeHospede = nomeHospede;
         this.quartoHotel = quartoHotel;
         this.quantidadeDias = quantidadeDias;
         this.valorTotalHospedagem = calcularValorTotal(valorDiaria, quantidadeDias);
-    }
-    public Reserva(String nomeHospede, String quartoHotel) {
-        this.nomeHospede = nomeHospede;
-        this.quartoHotel = quartoHotel;
     }
 
     public String getNomeHospede() {
@@ -50,7 +45,7 @@ public class Reserva {
     public String toString() {
         return "\nNome do Hóspede: " +
                 getNomeHospede() +
-                ".\nQuarto Escolhido: " +
+                "\nQuarto Escolhido: " +
                 getQuartoHotel() +
                 "\nQuantidade de Dias Reservados: " +
                 getQuantidadeDias() +
