@@ -14,30 +14,19 @@ public class Hospede {
     public String getNomeHospede() {
         return nomeHospede;
     }
-    public void setNomeHospede(String nomeHospede) {
-        this.nomeHospede = nomeHospede;
-    }
 
     public int getIdadeHospede() {
         return idadeHospede;
-    }
-    public void setIdadeHospede(int idadeHospede) {
-        this.idadeHospede = idadeHospede;
     }
 
     public String getIdentidadeHospede() {
         return identidadeHospede;
     }
-    public void setIdentidadeHospede(String identidadeHospede) {
-        this.identidadeHospede = identidadeHospede;
-    }
 
     @Override
     public String toString() {
-        return "Hospede:\n" +
-                "Nome: " + nomeHospede +
+        return "Nome Hospede: " + nomeHospede +
                 ", Idade: " + idadeHospede +
-                ", Identidade: " + identidadeHospede +
-                '\n';
+                ", Identidade: " + identidadeHospede;
     }
 }
