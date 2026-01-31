@@ -25,7 +25,7 @@ public class Hospede {
 
     @Override
     public String toString() {
-        return "Nome Hospede: " + nomeHospede +
+        return "Hospede - Nome: " + nomeHospede +
                 ", Idade: " + idadeHospede +
                 ", Identidade: " + identidadeHospede;
     }
