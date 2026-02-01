@@ -6,7 +6,7 @@ import entities.Reserva;
 import entities.TipoQuarto;
 
 public class Menu {
-    public static final int MAXIMO_DE_RESERVAS = 2;
+    public static final int MAXIMO_DE_RESERVAS = 5;
     public static int contadorReservas = 0;
     public static Reserva[] vetorReserva = new Reserva[MAXIMO_DE_RESERVAS];
     public static Scanner meuScanner = new Scanner(System.in);
@@ -21,14 +21,14 @@ public class Menu {
         int opcaoUsuario = 0;
         do {
             System.out.println("\nMenu Principal:");
-            System.out.println("1- Cadastrar nova reserva.\n2- Listar reservas.\n3- Buscar reserva por nome do hóspede.\n4- Ordenar reservas por números de dias em ordem decrescente.\n5- Sair do programa.");
+            System.out.println("1- Cadastrar nova reserva.\n2- Listar reservas.\n3- Buscar reserva por nome do hóspede.\n4- Ordenar reservas por números de dias em ordem decrescente.\n5- Check-Out.\n6- Sair do programa.");
 
             System.out.print("\nDigite o número de uma das opções: ");
             opcaoUsuario = meuScanner.nextInt();
             meuScanner.nextLine();
 
             opcaoMenu(opcaoUsuario);
-        } while(opcaoUsuario != 5);
+        } while(opcaoUsuario != 6);
         System.out.println("\nObrigado por usar o programa!");
     }
 
@@ -47,6 +47,9 @@ public class Menu {
                 ordenarVetorReservas();
                 break;
             case 5:
+                fazerCheckOut();
+                break;
+            case 6:
                 break;
             default:
                 System.out.println("\nOpção inválida, tente novamente.");
@@ -213,6 +216,39 @@ public class Menu {
             System.out.println("\nOrdenação decrescente concluída.");
         } else {
             System.out.println("\nNão há quartos reservados.");
+        }
+    }
+
+    public static void fazerCheckOut() {
+        listarReservas();
+        if(vetorReserva[0] != null) {
+            int reservaASerRemovida = 0;
+            do {
+            System.out.print("\nDigite o número da reserva que deseja fazer o Check-Out: ");
+            reservaASerRemovida = meuScanner.nextInt();
+            meuScanner.nextLine();
+            } while(reservaASerRemovida < 1 || reservaASerRemovida > MAXIMO_DE_RESERVAS || vetorReserva[reservaASerRemovida-1] == null);
+
+            System.out.print("Deseja remover a reserva de " + vetorReserva[reservaASerRemovida-1].getHospede().getNomeHospede() + "? (s/n) ");
+            char confirmaChar = meuScanner.next().charAt(0);
+            meuScanner.nextLine();
+            if(confirmaChar == 's' || confirmaChar == 'S') {
+                System.out.println("A Reserva de " + vetorReserva[reservaASerRemovida-1].getHospede().getNomeHospede() + " foi removida.");
+                vetorReserva[reservaASerRemovida-1] = null;
+                contadorReservas--;
+                arrumarVetor(vetorReserva);
+            } else {
+                System.out.println("A Reserva de " + vetorReserva[reservaASerRemovida-1].getHospede().getNomeHospede() + " não foi removida.");
+            }
+        }
+    }
+
+    public static void arrumarVetor(Reserva[] vetorReserva) {
+        for(int i = 0; i < vetorReserva.length; i++) {
+            if(vetorReserva[i] == null && i+1 != MAXIMO_DE_RESERVAS) {
+                vetorReserva[i] = vetorReserva[i+1];
+                vetorReserva[i+1] = null;
+            }
         }
     }
 }
