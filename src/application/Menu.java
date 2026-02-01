@@ -1,7 +1,9 @@
 package application;
 
 import java.util.Scanner;
+import entities.Hospede;
 import entities.Reserva;
+import entities.TipoQuarto;
 
 public class Menu {
     public static final int MAXIMO_DE_RESERVAS = 5;
@@ -19,14 +21,14 @@ public class Menu {
         int opcaoUsuario = 0;
         do {
             System.out.println("\nMenu Principal:");
-            System.out.println("1- Cadastrar nova reserva.\n2- Listar reservas.\n3- Buscar reserva por nome do hóspede.\n4- Ordenar reservas por números de dias em ordem decrescente.\n5- Sair do programa.");
+            System.out.println("1- Cadastrar nova reserva.\n2- Listar reservas.\n3- Buscar reserva por nome do hóspede.\n4- Ordenar reservas por números de dias em ordem decrescente.\n5- Check-Out.\n6- Sair do programa.");
 
             System.out.print("\nDigite o número de uma das opções: ");
             opcaoUsuario = meuScanner.nextInt();
             meuScanner.nextLine();
 
             opcaoMenu(opcaoUsuario);
-        } while(opcaoUsuario != 5);
+        } while(opcaoUsuario != 6);
         System.out.println("\nObrigado por usar o programa!");
     }
 
@@ -45,6 +47,9 @@ public class Menu {
                 ordenarVetorReservas();
                 break;
             case 5:
+                fazerCheckOut();
+                break;
+            case 6:
                 break;
             default:
                 System.out.println("\nOpção inválida, tente novamente.");
@@ -54,7 +59,6 @@ public class Menu {
     public static void cadastrarNovaReserva() {
         if(contadorReservas < MAXIMO_DE_RESERVAS) {
             criarReserva();
-
         } else {
             System.out.println("Desculpe, o hotel chegou ao máximo de reservas!");
         }
@@ -63,10 +67,19 @@ public class Menu {
     public static void criarReserva() {
         System.out.println("\nCadastro de Reserva de Quarto:");
 
-        System.out.print("Digite seu nome: ");
+        System.out.print("Digite o nome do hospede: ");
         String nomeUsuario = meuScanner.nextLine();
 
-        String quartoEscolhido = escolherQuarto();
+        System.out.print("Digite a idade do hospede: ");
+        int idadeUsuario = meuScanner.nextInt();
+        meuScanner.nextLine();
+
+        System.out.print("Digite o CPF do hospede: ");
+        String identidadeUsuario = meuScanner.nextLine();
+
+        Hospede hospede = new Hospede(nomeUsuario, idadeUsuario, identidadeUsuario);
+
+        TipoQuarto tipoQuarto = escolherQuarto();
 
         System.out.print("\nDigite a quantidade de dias que deseja reservar: ");
         int quantidadeDias = meuScanner.nextInt();
@@ -79,24 +92,14 @@ public class Menu {
             meuScanner.nextLine();
         }
 
-        System.out.print("\nDigite o valor da diária: R$ ");
-        double valorDiaria = meuScanner.nextDouble();
-        meuScanner.nextLine();
+        Reserva novaReserva = new Reserva(hospede, tipoQuarto, quantidadeDias);
 
-        while(valorDiaria <= 0) {
-            System.out.print("\nValor inválido, preencha com um valor positivo.");
-            System.out.print("\nDigite o valor da diária: R$ ");
-            valorDiaria = meuScanner.nextInt();
-            meuScanner.nextLine();
-        }
-
-        Reserva novaReserva = new Reserva(nomeUsuario, quartoEscolhido, quantidadeDias, valorDiaria);
-
-        System.out.print("\nInformações da reserva:");
+        System.out.println("\nInformações da Reserva:");
         System.out.println(novaReserva);
 
         System.out.print("\nConfirmar reserva? (s/n) ");
         char confirmaChar = meuScanner.next().charAt(0);
+        meuScanner.nextLine();
 
         if(confirmaChar == 's' || confirmaChar == 'S') {
             vetorReserva[contadorReservas] = novaReserva;
@@ -107,9 +110,8 @@ public class Menu {
         }
     }
 
-    public static String escolherQuarto() {
+    public static TipoQuarto escolherQuarto() {
         int opcaoQuarto;
-        String tipoQuarto = null;
         do {
             System.out.println("\nOpções de Quarto:\n1- Quarto básico.\n2- Quarto de Luxo.\n3- Quarto Presidencial.");
 
@@ -117,22 +119,46 @@ public class Menu {
             opcaoQuarto = meuScanner.nextInt();
             meuScanner.nextLine();
 
+            char confirmaChar;
             switch(opcaoQuarto) {
                 case 1:
-                    tipoQuarto = "Quarto Básico.";
+                    System.out.println(TipoQuarto.QUARTOBASICO);
+                    System.out.print("Deseja escolher esse quarto? (s/n) ");
+                    confirmaChar = meuScanner.next().charAt(0);
+                    meuScanner.nextLine();
+                    if(confirmaChar == 's' || confirmaChar == 'S') {
+                        System.out.println("Quarto Básico Escolhido.");
+                        return TipoQuarto.QUARTOBASICO;
+                    }
+                    opcaoQuarto = 0;
                     break;
                 case 2:
-                    tipoQuarto = "Quarto de Luxo.";
+                    System.out.println(TipoQuarto.QUARTOLUXO);
+                    System.out.print("Deseja escolher esse quarto? (s/n) ");
+                    confirmaChar = meuScanner.next().charAt(0);
+                    meuScanner.nextLine();
+                    if(confirmaChar == 's' || confirmaChar == 'S') {
+                        System.out.println("Quarto de Luxo Escolhido.");
+                        return TipoQuarto.QUARTOLUXO;
+                    }
+                    opcaoQuarto = 0;
                     break;
                 case 3:
-                    tipoQuarto = "Quarto Presidencial.";
+                    System.out.println(TipoQuarto.QUARTOPRESIDENCIAL);
+                    System.out.print("Deseja escolher esse quarto? (s/n) ");
+                    confirmaChar = meuScanner.next().charAt(0);
+                    meuScanner.nextLine();
+                    if(confirmaChar == 's' || confirmaChar == 'S') {
+                        System.out.println("Quarto Presidencial Escolhido.");
+                        return TipoQuarto.QUARTOPRESIDENCIAL;
+                    }
+                    opcaoQuarto = 0;
                     break;
                 default:
                     System.out.println("\nOpção inválida, tente novamente.");
             }
-        } while(opcaoQuarto<1 || opcaoQuarto>3); {
-            return tipoQuarto;
-        }
+        } while(opcaoQuarto<1 || opcaoQuarto>3);
+        return TipoQuarto.QUARTOBASICO;
     }
 
     public static void listarReservas() {
@@ -142,7 +168,7 @@ public class Menu {
             System.out.print("\nReservas Agendadas:");
             for (int reserva = 0; reserva < vetorReserva.length; reserva++) {
                 if (vetorReserva[reserva] != null) {
-                    System.out.print("\nReserva " + (reserva+1) + ":");
+                    System.out.println("\nReserva " + (reserva+1) + ":");
                     System.out.println(vetorReserva[reserva]);
                 }
             }
@@ -154,16 +180,16 @@ public class Menu {
             System.out.println("\nNão há quartos reservados.");
         } else {
             System.out.print("\nDigite o nome que deseja buscar: ");
-            String nome = meuScanner.nextLine();
-            nome = nome.toLowerCase();
+            String nomeBusca = meuScanner.nextLine();
+            String nome = nomeBusca.toLowerCase();
 
             boolean encontrou = false;
 
             for(int i = 0; i < vetorReserva.length; i++) {
                 if(vetorReserva[i] != null) {
-                    String aux = vetorReserva[i].getNomeHospede().toLowerCase();
+                    String aux = vetorReserva[i].getHospede().getNomeHospede().toLowerCase();
                     if(aux.contains(nome)) {
-                        System.out.print("\nReserva com parte do nome encontrado:");
+                        System.out.println("\nReserva com parte do nome de \""+ nomeBusca +"\" encontrado:");
                         System.out.println(vetorReserva[i]);
 
                         encontrou = true;
@@ -171,7 +197,7 @@ public class Menu {
                 }
             }
             if(!encontrou) {
-                System.out.println("\nNenhuma reserva com parte do nome foi encontrado.");
+                System.out.println("\nNenhuma reserva com parte do nome de \""+ nomeBusca +"\" foi encontrado.");
             }
         }
     }
@@ -190,6 +216,39 @@ public class Menu {
             System.out.println("\nOrdenação decrescente concluída.");
         } else {
             System.out.println("\nNão há quartos reservados.");
+        }
+    }
+
+    public static void fazerCheckOut() {
+        listarReservas();
+        if(vetorReserva[0] != null) {
+            int reservaASerRemovida = 0;
+            do {
+            System.out.print("\nDigite o número da reserva que deseja fazer o Check-Out: ");
+            reservaASerRemovida = meuScanner.nextInt();
+            meuScanner.nextLine();
+            } while(reservaASerRemovida < 1 || reservaASerRemovida > MAXIMO_DE_RESERVAS || vetorReserva[reservaASerRemovida-1] == null);
+
+            System.out.print("Deseja remover a reserva de " + vetorReserva[reservaASerRemovida-1].getHospede().getNomeHospede() + "? (s/n) ");
+            char confirmaChar = meuScanner.next().charAt(0);
+            meuScanner.nextLine();
+            if(confirmaChar == 's' || confirmaChar == 'S') {
+                System.out.println("A Reserva de " + vetorReserva[reservaASerRemovida-1].getHospede().getNomeHospede() + " foi removida.");
+                vetorReserva[reservaASerRemovida-1] = null;
+                contadorReservas--;
+                arrumarVetor(vetorReserva);
+            } else {
+                System.out.println("A Reserva de " + vetorReserva[reservaASerRemovida-1].getHospede().getNomeHospede() + " não foi removida.");
+            }
+        }
+    }
+
+    public static void arrumarVetor(Reserva[] vetorReserva) {
+        for(int i = 0; i < vetorReserva.length; i++) {
+            if(vetorReserva[i] == null && i+1 != MAXIMO_DE_RESERVAS) {
+                vetorReserva[i] = vetorReserva[i+1];
+                vetorReserva[i+1] = null;
+            }
         }
     }
 }
