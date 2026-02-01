@@ -29,10 +29,6 @@ public class Reserva {
         return valorTotalHospedagem;
     }
 
-    public void informarHospede() {
-        System.out.println(hospede);
-    }
-
     public String toString() {
         return  this.hospede +
                 "\nQuarto Escolhido: " +

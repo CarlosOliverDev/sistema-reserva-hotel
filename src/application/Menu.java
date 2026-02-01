@@ -23,9 +23,7 @@ public class Menu {
             System.out.println("\nMenu Principal:");
             System.out.println("1- Cadastrar nova reserva.\n2- Listar reservas.\n3- Buscar reserva por nome do hóspede.\n4- Ordenar reservas por números de dias em ordem decrescente.\n5- Check-Out.\n6- Sair do programa.");
 
-            System.out.print("\nDigite o número de uma das opções: ");
-            opcaoUsuario = meuScanner.nextInt();
-            meuScanner.nextLine();
+            opcaoUsuario = lerInteiro("\nDigite o número de uma das opções: ");
 
             opcaoMenu(opcaoUsuario);
         } while(opcaoUsuario != 6);
@@ -67,29 +65,22 @@ public class Menu {
     public static void criarReserva() {
         System.out.println("\nCadastro de Reserva de Quarto:");
 
-        System.out.print("Digite o nome do hospede: ");
+        System.out.print("Digite o nome do hóspede: ");
         String nomeUsuario = meuScanner.nextLine();
 
-        System.out.print("Digite a idade do hospede: ");
-        int idadeUsuario = meuScanner.nextInt();
-        meuScanner.nextLine();
+        int idadeUsuario = lerInteiro("Digite a idade do hóspede: ");
 
-        System.out.print("Digite o CPF do hospede: ");
+        System.out.print("Digite o CPF do hóspede: ");
         String identidadeUsuario = meuScanner.nextLine();
 
         Hospede hospede = new Hospede(nomeUsuario, idadeUsuario, identidadeUsuario);
 
         TipoQuarto tipoQuarto = escolherQuarto();
 
-        System.out.print("\nDigite a quantidade de dias que deseja reservar: ");
-        int quantidadeDias = meuScanner.nextInt();
-        meuScanner.nextLine();
+        int quantidadeDias = lerInteiro("\nDigite a quantidade de dias que deseja reservar: ");
 
         while(quantidadeDias < 1) {
-            System.out.print("\nÉ necessário se hospedar pelo menos 1 dia.");
-            System.out.print("\nDigite a quantidade de dias que deseja reservar: ");
-            quantidadeDias = meuScanner.nextInt();
-            meuScanner.nextLine();
+            quantidadeDias = lerInteiro("\nÉ necessário se hospedar pelo menos 1 dia." + "\nDigite a quantidade de dias que deseja reservar: ");
         }
 
         Reserva novaReserva = new Reserva(hospede, tipoQuarto, quantidadeDias);
@@ -115,9 +106,7 @@ public class Menu {
         do {
             System.out.println("\nOpções de Quarto:\n1- Quarto básico.\n2- Quarto de Luxo.\n3- Quarto Presidencial.");
 
-            System.out.print("\nDigite o número de uma das opções: ");
-            opcaoQuarto = meuScanner.nextInt();
-            meuScanner.nextLine();
+            opcaoQuarto = lerInteiro("\nDigite o número de uma das opções: ");
 
             char confirmaChar;
             switch(opcaoQuarto) {
@@ -224,9 +213,7 @@ public class Menu {
         if(vetorReserva[0] != null) {
             int reservaASerRemovida = 0;
             do {
-            System.out.print("\nDigite o número da reserva que deseja fazer o Check-Out: ");
-            reservaASerRemovida = meuScanner.nextInt();
-            meuScanner.nextLine();
+            reservaASerRemovida = lerInteiro("\nDigite o número da reserva que deseja fazer o Check-Out: ");
             } while(reservaASerRemovida < 1 || reservaASerRemovida > MAXIMO_DE_RESERVAS || vetorReserva[reservaASerRemovida-1] == null);
 
             System.out.print("Deseja remover a reserva de " + vetorReserva[reservaASerRemovida-1].getHospede().getNomeHospede() + "? (s/n) ");
@@ -248,6 +235,20 @@ public class Menu {
             if(vetorReserva[i] == null && i+1 != MAXIMO_DE_RESERVAS) {
                 vetorReserva[i] = vetorReserva[i+1];
                 vetorReserva[i+1] = null;
+            }
+        }
+    }
+
+    public static int lerInteiro(String mensagem) {
+        while (true) {
+            try {
+                System.out.print(mensagem);
+                int numero = meuScanner.nextInt();
+                meuScanner.nextLine();
+                return numero;
+            } catch (java.util.InputMismatchException e) {
+                System.out.println("\nErro: Entrada inválida. Por favor, digite apenas números inteiros.");
+                meuScanner.nextLine();
             }
         }
     }
