@@ -67,11 +67,25 @@ public class Menu {
 
         System.out.print("Digite o nome do hóspede: ");
         String nomeUsuario = meuScanner.nextLine();
+        while(nomeUsuario.isEmpty()) {
+            System.out.println("Preencha o campo com o nome do hóspede.");
+            System.out.print("Digite o nome do hóspede: ");
+            nomeUsuario = meuScanner.nextLine();
+        }
 
         int idadeUsuario = lerInteiro("Digite a idade do hóspede: ");
+        while(idadeUsuario < 18) {
+            System.out.println("É necessário ser maior de idade para reservar um quarto.");
+            idadeUsuario = lerInteiro("Digite a idade do hóspede: ");
+        }
 
         System.out.print("Digite o CPF do hóspede: ");
         String identidadeUsuario = meuScanner.nextLine();
+        while(identidadeUsuario.isEmpty()) {
+            System.out.println("Preencha o campo com a identidade do hóspede.");
+            System.out.print("Digite o CPF do hóspede: ");
+            identidadeUsuario = meuScanner.nextLine();
+        }
 
         Hospede hospede = new Hospede(nomeUsuario, idadeUsuario, identidadeUsuario);
 

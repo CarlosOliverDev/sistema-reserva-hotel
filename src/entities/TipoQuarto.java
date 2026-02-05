@@ -23,7 +23,7 @@ public enum TipoQuarto {
 
     @Override
     public String toString() {
-        return "\nTipo Quarto: " + nomeQuarto +
-                String.format("\nValor Quarto: R$ %.2f",valorQuarto)  ;
+        return "\nTipo Quarto: " + getNomeQuarto() +
+                String.format("\nValor Quarto: R$ %.2f",getValorQuarto())  ;
     }
 }

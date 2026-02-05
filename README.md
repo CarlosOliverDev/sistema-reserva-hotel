@@ -50,4 +50,4 @@ A arquitetura foi dividida para respeitar a responsabilidade única:
    git clone https://github.com/CarlosOliverDev/sistema-reserva-hotel.git
    ```
 3. Abra o projeto em sua IDE de preferência (IntelliJ, Eclipse, VS Code).
-4. Execute a classe principal contendo o método main.
+4. Execute a classe Menu.java.

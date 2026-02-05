@@ -30,9 +30,9 @@ public class Reserva {
     }
 
     public String toString() {
-        return  this.hospede +
+        return  getHospede() +
                 "\nQuarto Escolhido: " +
-                this.tipoQuarto.getNomeQuarto() +
+                getTipoQuarto().getNomeQuarto() +
                 "\nQuantidade de Dias Reservados: " +
                 getQuantidadeDias() +
                 "\nValor Total da Hospedagem: R$ " +
